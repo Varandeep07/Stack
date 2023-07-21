@@ -51,13 +51,13 @@ export default function NavBar() {
           style={{
             color: '#2B2A4C',
             fontSize: '18px',
-            fontWeight: '500',
+            fontWeight: '600',
             fontFamily: 'poppins',
             cursor: 'pointer',
             textDecoration: 'none',
           }}
         >
-          RECtangle
+          Stack
         </Link>
         {isUserLoggedIn && (
           <span style={{ display: 'flex', alignItems: 'center' }}>
