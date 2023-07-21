@@ -1,25 +1,49 @@
-import logo from './logo.svg';
-import './App.css';
+import AddProblem from './Components/AddProblem';
+import Login from './Components/Login';
+import NavBar from './Components/NavBar';
+import ProblemList from './Components/ProblemList';
+import Profile from './Components/Profile';
+import Problemview from './Components/Problemview';
+import SignUp from './Components/SignUp';
+import './index.css';
+import {Routes, Route} from 'react-router-dom';
+import { useState, createContext, lazy, Suspense } from 'react';
 
-function App() {
+export const AppContext = createContext(null);
+  
+export default function App() {
+  const [loggedInEmail,setloggedInEmail] = useState('');
+  const [isUserLoggedIn, setIsUserLoggedIn] = useState(false);
+  const [userEmail, setUserEmail] = useState('');
+  
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <AppContext.Provider value={{loggedInEmail,setloggedInEmail,isUserLoggedIn, setIsUserLoggedIn,userEmail, setUserEmail}}>
+
+    <div>
+      <NavBar/>
+        <Routes>
+            <Route path='/' element = {<SignUp/>}/>
+            <Route path='/login' element = {<Login/>}/>
+            <Route path='/problemlist' element={<ProblemList/>}/>
+            <Route path='/problemview/:problemId' element={<Problemview/>} />
+            {/* <Route path='/profile' element={<Profile/>}/> */}
+            <Route path='/add' element={<AddProblem/>}/>
+            <Route path='*' element={<h3 style={{textAlign: 'center'}}>Page not found!</h3>}/>
+      </Routes>
     </div>
-  );
+
+    </AppContext.Provider>
+  )
 }
 
-export default App;
+// // To-do
+// /*
+// 2. setters's & testers name from user feature - done 
+// 3. formatting text provided in the input fields - done 
+// 4. Problem view - done
+// 1. Date object in problem card - done
+// 5. open the problem - open-btn - done
+// 7. Delete the problem by author - done 
+// 8. Change the status of the problem by reviewer - done
+// 6. Protect routes - done
+// */
