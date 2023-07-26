@@ -1,9 +1,9 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { fetchUsers } from './ReviewerList';
+import { fetchUsers } from '../Utils/ReviewerList';
 import Button from '@mui/material/Button';
 import './NavBar.css';
-import { AppContext } from '../App';
+import { AppContext } from '../../App';
 
 export default function NavBar() {
   const [userName, setUserName] = useState('');
@@ -14,8 +14,7 @@ export default function NavBar() {
   useEffect(() => {
     const email = localStorage.getItem('userEmail');
     setUserEmail(email);
-    console.log("emaillll: ", email);
-    setIsUserLoggedIn(!!email); // Check if the email is truthy to determine if the user is logged in
+    setIsUserLoggedIn(!!email); 
   }, []);
 
   useEffect(() => {

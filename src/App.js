@@ -1,10 +1,10 @@
-import AddProblem from './Components/AddProblem';
-import Login from './Components/Login';
-import NavBar from './Components/NavBar';
-import ProblemList from './Components/ProblemList';
-import Profile from './Components/Profile';
-import Problemview from './Components/Problemview';
-import SignUp from './Components/SignUp';
+import AddProblem from './Components/AddProblem/AddProblem';
+import Login from './Components/Login/Login';
+import NavBar from './Components/NavBar/NavBar';
+import ProblemList from './Components/ProblemList/ProblemList';
+import Profile from './Components/Profile/Profile';
+import Problemview from './Components/Problemview/Problemview';
+import SignUp from './Components/SignUp/SignUp';
 import './index.css';
 import {Routes, Route} from 'react-router-dom';
 import { useState, createContext, lazy, Suspense } from 'react';

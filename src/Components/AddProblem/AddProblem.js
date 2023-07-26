@@ -1,12 +1,12 @@
 import React, { useEffect, useState, useCallback, useContext } from 'react';
 import './AddProblem.css';
-import { database } from '../firebaseConfig';
+import { database } from '../../firebaseConfig';
 import { collection, doc, setDoc } from 'firebase/firestore';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 // import fetchReviewers from './ReviewerList';
-import {fetchUsers} from './ReviewerList';
-import {AppContext} from '../App'; 
+import {fetchUsers} from '../Utils/ReviewerList';
+import {AppContext} from '../../App'; 
 import { Link } from 'react-router-dom';
 
 const AddProblem = () => {
@@ -85,8 +85,7 @@ const AddProblem = () => {
     const newProblemRef = doc(collection(database, 'Problems'));
     problemId = newProblemRef.id;
     const date = new Date(Date.now());
-    let curDate = date.getDate()+'/'+date.getMonth()+'/'+date.getFullYear();
-    console.log(curDate);
+    let curDate = date.getDate()+'/'+ (date.getMonth() + 1) +'/'+date.getFullYear();
     
     let ProblemSetter = '@';
     ProblemSetter = SettersList.filter((user)=>{
@@ -95,15 +94,8 @@ const AddProblem = () => {
       }
     });
 
-    // let ProblemSetter = SettersList.filter((user)=>{
-    //   if(user.Email==='test123@gmail.com'){
-    //     return user.Name;
-    //   }
-    // });
 
     let StatusofProblem = 'Pending'
-    console.log("she: ",ProblemSetter);
-    console.log("pro: ",Reviewer); 
     if(ProblemSetter==='@'){
       console.log('no problem setter found!');
       return;
@@ -130,9 +122,7 @@ const AddProblem = () => {
 
   const handleReviewerChange = (e) => {
     const selectedReviewer = Reviewers.find(user => user.Email === e.target.value);
-    console.log("selec: ",selectedReviewer);
     setReviewer(selectedReviewer);
-    console.log("hii: ",Reviewer);
   };
   if(!isUserLoggedIn){
     return <h3 style={{textAlign: 'center'}}>Please <Link to='/login'>Login</Link> to access!</h3>

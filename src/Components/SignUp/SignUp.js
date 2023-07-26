@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import {  createUserWithEmailAndPassword } from 'firebase/auth';
 import { useNavigate, Link } from 'react-router-dom';
-import { auth, database } from '../firebaseConfig';
+import { auth, database } from '../../firebaseConfig';
 import {addDoc, collection} from 'firebase/firestore';
 import './SignUp.css';
 
@@ -26,10 +26,10 @@ function SignUp() {
     createUserWithEmailAndPassword(auth, formValues.Email, formValues.Password)
     .then((userCredential) => {
         const user = userCredential.user;
-        console.log(user);
+        // console.log(user);
         addDoc(db,formValues)
         .then((docRef)=>{
-            console.log('Doc added with id: ',docRef);
+            // console.log('Doc added with id: ',docRef);
             navigate("/login");
         })
         .catch((error)=>{
@@ -49,7 +49,7 @@ function SignUp() {
     event.preventDefault();
     setIsSubmit(true);
     setFormErrors(validate(formValues));
-    console.log("Error: ", formErrors);
+    // console.log("Error: ", formErrors);
     if(Object.keys(formErrors).length === 0) {
         createUser();
     }
@@ -59,7 +59,7 @@ function SignUp() {
     const {name, value} = event.target;
     setFormValues({...formValues, [name] : value});
     setFormErrors(validate(formValues));
-    console.log("Error: ", formErrors);
+    // console.log("Error: ", formErrors);
   }
   
   const validate = (values) => {

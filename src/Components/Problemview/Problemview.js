@@ -2,12 +2,12 @@ import React, { useEffect, useState, useContext } from 'react';
 import './Problemview.css';
 import { useNavigate, useParams } from 'react-router-dom';
 import { collection, deleteDoc, doc, onSnapshot, updateDoc } from 'firebase/firestore';
-import { database } from '../firebaseConfig';
+import { database } from '../../firebaseConfig';
 import { Button, Icon } from '@mui/material';
 import DoneIcon from '@mui/icons-material/Done';
 import CloseIcon from '@mui/icons-material/Close';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
-import { AppContext } from '../App';
+import { AppContext } from '../../App';
 import { Link } from 'react-router-dom';
 
 function Problemview() {
@@ -29,14 +29,14 @@ function Problemview() {
           setProblemValues(docs.data());
           if (docs.data()?.ProblemSetter[0].Email === localStorage.getItem('userEmail')) {
             setIsCurrentUserAuthor(true);
-            console.log('yes, he is the author');
+            // console.log('yes, he is the author');
           }
           if (docs.data()?.Reviewer.Email === localStorage.getItem('userEmail')) {
             setIsCurrentUserReviewer(true);
-            console.log('yes, he is reviewer');
+            // console.log('yes, he is reviewer');
           }
           setStatus(docs.data()?.StatusofProblem);
-          console.log('statuus: ', status);
+          // console.log('statuus: ', status);
       });
     };
 

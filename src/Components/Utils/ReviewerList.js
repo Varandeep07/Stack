@@ -1,5 +1,5 @@
 import { collection, onSnapshot } from 'firebase/firestore';
-import { database } from '../firebaseConfig';
+import { database } from '../../firebaseConfig';
 
 let databaseCollection = collection(database, 'Users');
 
@@ -25,7 +25,7 @@ const fetchUserListWithEmail = () => {
         const data = doc.data();
         UsersList.push({'Name': data.Name, 'Email': data.Email});
       });
-      console.log("user: ",UsersList);
+      // console.log("user: ",UsersList);
       resolve(UsersList);
     }, reject);
   });

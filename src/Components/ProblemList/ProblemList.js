@@ -1,10 +1,10 @@
-import findAll from './Table/DATA';
+import findAll from '../Table/DATA';
 import { useContext, useEffect, useState } from 'react';
-import './Table/table.css';
+import '../Table/table.css';
 import Button from '@material-ui/core/Button';
 import { Link, useNavigate } from "react-router-dom";
-import ProblemCard from './ProblemCard';
-import { AppContext } from '../App';
+import ProblemCard from '../ProblemCard/ProblemCard';
+import { AppContext } from '../../App';
 
 export default function ProblemList() {
   const [data, setData] = useState([]);

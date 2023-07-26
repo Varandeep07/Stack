@@ -2,8 +2,8 @@ import React, { useState, useContext } from 'react'
 import { Link, useNavigate } from 'react-router-dom';
 import './Login.css';
 import { signInWithEmailAndPassword } from 'firebase/auth';
-import { auth } from '../firebaseConfig';
-import {AppContext} from '../App'; 
+import { auth } from '../../firebaseConfig';
+import {AppContext} from '../../App'; 
 
 function Login() {
   const [email,setEmail] = useState('');
@@ -22,7 +22,7 @@ function Login() {
       setIsUserLoggedIn(true);
       setUserEmail(user.email);
       localStorage.setItem('userEmail', user.email);
-      console.log("user: ",user.email);
+      // console.log("user: ",user.email);
       navigate('/problemlist');
     })
     .catch((err) => {
