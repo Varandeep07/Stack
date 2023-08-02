@@ -22,7 +22,7 @@ const AddProblem = () => {
   const [SettersList, setSettersList] = useState(['hi']);
 
   let problemId = '';
-  const {isUserLoggedIn} = useContext(AppContext);
+  const {isAllow, isUserLoggedIn} = useContext(AppContext);
   // const newFunction = useCallback( async () => {
   //     const reviewers = await fetchReviewers();
   //     setReviewers(reviewers);
@@ -124,6 +124,9 @@ const AddProblem = () => {
     const selectedReviewer = Reviewers.find(user => user.Email === e.target.value);
     setReviewer(selectedReviewer);
   };
+  if(!isAllow){
+    return <h2 style={{ textAlign: 'center' }}>Not Allowed to view this content. Ask Admin for access.</h2>
+  }
   if(!isUserLoggedIn){
     return <h3 style={{textAlign: 'center'}}>Please <Link to='/login'>Login</Link> to access!</h3>
   }

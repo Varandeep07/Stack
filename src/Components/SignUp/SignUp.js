@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import {  createUserWithEmailAndPassword } from 'firebase/auth';
 import { useNavigate, Link } from 'react-router-dom';
 import { auth, database } from '../../firebaseConfig';
 import {addDoc, collection} from 'firebase/firestore';
 import './SignUp.css';
+
 
 function SignUp() {   
   const navigate = useNavigate();
@@ -88,6 +89,7 @@ function SignUp() {
     } 
     return errors;
   }
+
   if(localStorage.getItem('userEmail')){
     navigate('/problemlist');
   }

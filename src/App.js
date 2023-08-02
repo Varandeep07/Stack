@@ -7,17 +7,33 @@ import Problemview from './Components/Problemview/Problemview';
 import SignUp from './Components/SignUp/SignUp';
 import './index.css';
 import {Routes, Route} from 'react-router-dom';
-import { useState, createContext, lazy, Suspense } from 'react';
+import { useState, createContext, useEffect} from 'react';
+import { collection, onSnapshot } from 'firebase/firestore';
+import { database } from './firebaseConfig';
 
 export const AppContext = createContext(null);
-  
+let databaseCollection = collection(database, 'Users');
+
 export default function App() {
   const [loggedInEmail,setloggedInEmail] = useState('');
   const [isUserLoggedIn, setIsUserLoggedIn] = useState(false);
   const [userEmail, setUserEmail] = useState('');
-  
+  const [isAllow, setIsAllow] = useState(false);
+  useEffect(()=>{
+    if(userEmail){
+      console.log("entered: ",userEmail);
+      onSnapshot(databaseCollection, (snapshot)=>{
+        snapshot.forEach((doc) => {
+          const data = doc.data();
+          if(data.Email === userEmail){
+            setIsAllow(data.Allow);
+          }
+        });
+      })
+    }
+  },[userEmail])
   return (
-    <AppContext.Provider value={{loggedInEmail,setloggedInEmail,isUserLoggedIn, setIsUserLoggedIn,userEmail, setUserEmail}}>
+    <AppContext.Provider value={{isAllow, setIsAllow, loggedInEmail,setloggedInEmail,isUserLoggedIn, setIsUserLoggedIn,userEmail, setUserEmail}}>
 
     <div>
       <NavBar/>

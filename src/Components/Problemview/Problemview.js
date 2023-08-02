@@ -20,8 +20,7 @@ function Problemview() {
   let problemsdb = collection(database, 'Problems');
   const document = doc(problemsdb, params.problemId);
   let navigate = useNavigate();
-  const {isUserLoggedIn} = useContext(AppContext);
-
+  const {isAllow, isUserLoggedIn} = useContext(AppContext);
   useEffect(() => {
     let unsubscribe;
     const fetchData = async () => {
@@ -69,7 +68,9 @@ function Problemview() {
       console.log(error);
     }
   };
-
+  if(!isAllow){
+    return <h2 style={{ textAlign: 'center' }}>Not Allowed to view this content. Ask Admin for access.</h2>
+  }
   if (problemValues === 'Loading') {
     return <h2 style={{ textAlign: 'center' }}>Loading...</h2>;
   }

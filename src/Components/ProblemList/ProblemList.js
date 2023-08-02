@@ -9,7 +9,7 @@ import { AppContext } from '../../App';
 export default function ProblemList() {
   const [data, setData] = useState([]);
   const [Loading, setLoading] = useState(true);
-  const {isUserLoggedIn} = useContext(AppContext);
+  const {isAllow, isUserLoggedIn} = useContext(AppContext);
   useEffect(() => {
     const fetchData = async () => {
       const result = await findAll();
@@ -20,6 +20,9 @@ export default function ProblemList() {
   }, []);
 
   const navigate = useNavigate();
+  if(!isAllow){
+    return <h2 style={{ textAlign: 'center' }}>Not Allowed to view this content. Ask Admin for access.</h2>
+  }
   if(Loading){
     return <h3 style={{textAlign: 'center'}}>Loading...</h3>
   }
