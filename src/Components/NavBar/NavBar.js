@@ -49,9 +49,9 @@ export default function NavBar() {
           to="/problemlist"
           style={{
             color: '#2B2A4C',
-            fontSize: '18px',
+            fontSize: '20px',
             fontWeight: '600',
-            fontFamily: 'poppins',
+            fontFamily: 'Poppins',
             cursor: 'pointer',
             textDecoration: 'none',
           }}

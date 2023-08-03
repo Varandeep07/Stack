@@ -100,7 +100,11 @@ const AddProblem = () => {
       console.log('no problem setter found!');
       return;
     }
-    
+
+    if(!Reviewer){
+      alert("Please select a Reviewer!");
+      return;
+    }
     const formData = {
       problemName,
       ProblemSetter,
@@ -122,10 +126,13 @@ const AddProblem = () => {
 
   const handleReviewerChange = (e) => {
     const selectedReviewer = Reviewers.find(user => user.Email === e.target.value);
-    setReviewer(selectedReviewer);
+    if(selectedReviewer==undefined){
+      alert("Please select a Reviewer!");
+    }
+    else setReviewer(selectedReviewer);
   };
   if(!isAllow){
-    return <h2 style={{ textAlign: 'center' }}>Not Allowed to view this content. Ask Admin for access.</h2>
+    return <h3 style={{ textAlign: 'center' }}>Ask admin for access</h3>
   }
   if(!isUserLoggedIn){
     return <h3 style={{textAlign: 'center'}}>Please <Link to='/login'>Login</Link> to access!</h3>
@@ -223,9 +230,13 @@ const AddProblem = () => {
               <option value="tester3">Tester 3</option>  */}
               <option key='choose-one' value='choose-one'>Choose one</option>
               {Reviewers.map((user) => (
-                  <option key={user.Email} value={user.Email}>
-                    {user.Name}
-                  </option>
+                <>
+                  { user.Position === 'Final Year' &&
+                    <option key={user.Email} value={user.Email}>
+                      {user.Name}
+                    </option>
+                  }
+                </>
                 ))}
             </select>
 

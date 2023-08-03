@@ -23,7 +23,7 @@ const fetchUserListWithEmail = () => {
     onSnapshot(databaseCollection, (snapshot) => {
       snapshot.forEach((doc) => {
         const data = doc.data();
-        UsersList.push({'Name': data.Name, 'Email': data.Email});
+        UsersList.push({'Name': data.Name, 'Email': data.Email, 'Position': data.Position});
       });
       // console.log("user: ",UsersList);
       resolve(UsersList);

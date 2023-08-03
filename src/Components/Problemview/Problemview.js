@@ -69,7 +69,7 @@ function Problemview() {
     }
   };
   if(!isAllow){
-    return <h2 style={{ textAlign: 'center' }}>Not Allowed to view this content. Ask Admin for access.</h2>
+    return <h3 style={{ textAlign: 'center' }}>Ask admin for access</h3>
   }
   if (problemValues === 'Loading') {
     return <h2 style={{ textAlign: 'center' }}>Loading...</h2>;

@@ -1,27 +1,74 @@
 import findAll from '../Table/DATA';
 import { useContext, useEffect, useState } from 'react';
-import '../Table/table.css';
+import './ProblemList.css';
 import Button from '@material-ui/core/Button';
 import { Link, useNavigate } from "react-router-dom";
 import ProblemCard from '../ProblemCard/ProblemCard';
 import { AppContext } from '../../App';
+import { fetchUsers } from '../Utils/ReviewerList';
 
 export default function ProblemList() {
   const [data, setData] = useState([]);
+  const [orginalData, setOriginalData] = useState([]);
   const [Loading, setLoading] = useState(true);
+  const [isSortByDateClicked, setIsSortByDateClicked] = useState(false);
   const {isAllow, isUserLoggedIn} = useContext(AppContext);
+  const [canSeeReviewer,setCanSeeReviewer] = useState(false);
+  const [isAcceptedClicked, setIsAcceptedClicked] = useState(false);
+  const [isPendingClicked, setIsPendingClicked] = useState(false);
+  const [isRejectedClicked, setIsRejectedClicked] = useState(false);
+  const [firstTime, setFirstTime] = useState(true);
+
   useEffect(() => {
     const fetchData = async () => {
       const result = await findAll();
       setData(result);
+      setOriginalData(result);
     };
     fetchData();
     setLoading(false);
   }, []);
+  const fetchUserData = async () => {
+    try {
+      const setters = await fetchUsers();
+      const currentUser = setters.find((user) => user.Email === localStorage.getItem('userEmail'));
+      if (currentUser) {
+        // console.log("current: ",currentUser);
+        if(currentUser.Position == 'Final Year'){
+          setCanSeeReviewer(true);
+        }
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  useEffect(()=>{
+    fetchUserData();
+  },[])
+
+  const showFilteredProblems = () => {
+    const filteredProblems = orginalData.filter((problem) => {
+      return (
+        (isAcceptedClicked && problem.status === 'Accepted') ||
+        (isPendingClicked && problem.status === 'Pending') ||
+        (isRejectedClicked && problem.status === 'Rejected')
+      );
+    });
+    setData(filteredProblems);
+  };
+
+  useEffect(() => {
+    console.log('in useEffect:');
+    if (!firstTime) {
+      showFilteredProblems();
+    } else {
+      setFirstTime(false);
+    }
+  }, [isAcceptedClicked, isPendingClicked, isRejectedClicked]);
 
   const navigate = useNavigate();
   if(!isAllow){
-    return <h2 style={{ textAlign: 'center' }}>Not Allowed to view this content. Ask Admin for access.</h2>
+    return <h3 style={{ textAlign: 'center' }}>Ask admin for access</h3>
   }
   if(Loading){
     return <h3 style={{textAlign: 'center'}}>Loading...</h3>
@@ -29,6 +76,30 @@ export default function ProblemList() {
   if(!isUserLoggedIn){
     return <h3 style={{textAlign: 'center'}}>Please <Link to='/login'>Login</Link> to access!</h3>
   }
+  const sortByDate = () => {
+    const sortedArrAsc = [...data].sort((a, b) => {
+      const dateA = new Date(a.date.split('/').reverse().join('/'));
+      const dateB = new Date(b.date.split('/').reverse().join('/'));
+      return dateB - dateA;
+    });
+    
+    const sortedArrDesc = [...data].sort((a, b) => {
+      const dateA = new Date(a.date.split('/').reverse().join('/'));
+      const dateB = new Date(b.date.split('/').reverse().join('/'));
+      return dateA - dateB;
+    });
+
+    if(!isSortByDateClicked){
+      setData(sortedArrAsc);
+      setIsSortByDateClicked(true);
+    }
+    else{
+      setIsSortByDateClicked(false);
+      setData(sortedArrDesc);
+    }
+  }
+
+    
   return (
     <>
       <div className='problem-list'>
@@ -36,11 +107,40 @@ export default function ProblemList() {
         <Button
           variant="contained"
           color="primary"
-          style={{ backgroundColor: '#136f63', color: 'white', margin: '10px' }}
+          style={{ backgroundColor: '#136f63', color: 'white', margin: '10px', marginBottom: '20px' }}
           onClick={() => navigate("/add")}
         >
           + Add
         </Button>
+
+        <div className='Filters'>
+          <div className="threeFilters">
+        {
+          isAcceptedClicked? (
+            <Button onClick={()=>setIsAcceptedClicked(false)} style={{backgroundColor: '#CBFFA9', fontSize: '13px'}}>Accepted</Button>
+            ): 
+            (<Button onClick={()=>setIsAcceptedClicked(true)} >Accepted</Button>)
+          }
+        {
+          isPendingClicked? (
+            <Button onClick={()=>setIsPendingClicked(false)} style={{backgroundColor: '#F3AA60', fontSize: '13px'}}>Pending</Button>
+            ): 
+            (<Button onClick={()=>setIsPendingClicked(true)}>Pending</Button>)
+          }
+        {
+          isRejectedClicked? (
+            <Button onClick={()=>setIsRejectedClicked(false)} style={{backgroundColor: '#E74646', fontSize: '13px'}}>Rejected</Button>
+            ): 
+            (<Button onClick={()=>setIsRejectedClicked(true)}>Rejected</Button>)
+          }
+        </div>
+        {
+          isSortByDateClicked? (
+            <Button onClick={sortByDate} style={{backgroundColor: 'rgba(225, 225, 225, 0.909)'}}>Sort By Date</Button>
+          ): 
+          (<Button onClick={sortByDate}>Sort By Date</Button>)
+        }
+          </div>
       </div>
       {data.length > 0 &&
         data.map((problem) =>
@@ -53,6 +153,7 @@ export default function ProblemList() {
             problemId={problem.problemId}
             status = {problem.status}
             key = {problem.problemId}
+            canSeeReviewer = {canSeeReviewer}
           />
         )}
     </>

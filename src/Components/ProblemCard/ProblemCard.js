@@ -1,14 +1,16 @@
 // ProblemCard.js
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './ProblemCard.css';
 
-const ProblemCard = ({ problemName, problemSetter, problemId, testers, difficulty, date, status }) => {
+const ProblemCard = ({ problemName, problemSetter, problemId, testers, difficulty, date, status, canSeeReviewer }) => {
+ 
   let Navigate = useNavigate();
   const handleClick = () => {
     Navigate(`/problemview/${problemId}`);
   }
+
   return (
     <div className="problem-card">
       <div className="Problem-header">
@@ -26,7 +28,11 @@ const ProblemCard = ({ problemName, problemSetter, problemId, testers, difficult
       </div>
       <div className="setter">
         <span>Problem Setter - {problemSetter}</span>
-        <span>Reviewer - {testers}</span>
+        {
+          canSeeReviewer?(
+          <span>Reviewer - {testers}</span>
+          ): <span>Reviewer - *******</span>
+        }
       </div>
       <div className='ParentDifficulty'>
         <div className="difficulty">

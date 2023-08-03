@@ -4,15 +4,6 @@ table {
     width: 60%;
 }
 
-.problem-list{
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    margin-top: 1%;
-    margin-bottom: 1rem;
-}
-
 .custom-button{
     /* box-shadow: none; */
     margin: 10px;
