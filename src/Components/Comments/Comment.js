@@ -10,7 +10,7 @@ const Comment = () => {
   const [CommentsArr, setCommentsArr] = useState([]);
   const[Name, setName] = useState('');
   const[Position, setPosition] = useState('');
-  let Email = localStorage.getItem('UserEmail');
+  const[Email,setEmail] = useState(localStorage.getItem('UserEmail'));
 
   let problemsdb = collection(database, 'Problems');
   const url = window.location.pathname;
@@ -34,6 +34,8 @@ const Comment = () => {
   const newFunction2 = useCallback( async () => {
     const Users = await fetchUsers();
     const UserFound = Users.filter((User)=> User.Email===Email );
+    console.log("users List: ",Users);
+    console.log("email: ",Email);
     console.log("user: ",UserFound);
     setName(UserFound[0].Name);
     setPosition(UserFound[0].Position);
