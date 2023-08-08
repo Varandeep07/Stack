@@ -1,17 +1,19 @@
-import React, { useEffect, useState, useCallback } from 'react'
+import React, { useEffect, useState, useCallback, useContext } from 'react'
 import './Comment.css'
 import CommentBox from './CommentBox'
 import SingleComment from './SingleComment';
 import { collection, doc, getDoc, onSnapshot, updateDoc } from 'firebase/firestore';
 import { database } from '../../firebaseConfig';
 import {fetchUsers} from '../Utils/ReviewerList';
+import { AppContext } from '../../App';
 
 const Comment = () => {
   const [CommentsArr, setCommentsArr] = useState([]);
   const[Name, setName] = useState('');
   const[Position, setPosition] = useState('');
-  const[Email,setEmail] = useState(localStorage.getItem('UserEmail'));
-
+  const {userEmail} = useContext(AppContext);
+  console.log("userff: ",userEmail);
+  const[Email,setEmail] = useState(userEmail);
   let problemsdb = collection(database, 'Problems');
   const url = window.location.pathname;
   const problemId = url.split('/problemview/')[1];
@@ -35,6 +37,7 @@ const Comment = () => {
     const Users = await fetchUsers();
     const UserFound = Users.filter((User)=> User.Email===Email );
     console.log("users List: ",Users);
+    console.log("localstorage: ",localStorage.getItem('UserEmail'));
     console.log("email: ",Email);
     console.log("user: ",UserFound);
     setName(UserFound[0].Name);
