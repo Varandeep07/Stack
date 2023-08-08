@@ -34,7 +34,7 @@ const Comment = () => {
   const newFunction2 = useCallback( async () => {
     const Users = await fetchUsers();
     const UserFound = Users.filter((User)=> User.Email===Email );
-  
+    console.log("user: ",UserFound);
     setName(UserFound[0].Name);
     setPosition(UserFound[0].Position);
   });
