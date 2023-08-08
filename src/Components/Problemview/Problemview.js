@@ -9,13 +9,14 @@ import CloseIcon from '@mui/icons-material/Close';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import { AppContext } from '../../App';
 import { Link } from 'react-router-dom';
+import Comment from '../Comments/Comment';
 
 function Problemview() {
+
   const [problemValues, setProblemValues] = useState('Loading');
   const [isCurrentUserAuthor, setIsCurrentUserAuthor] = useState(false);
   const [isCurrentUserReviewer, setIsCurrentUserReviewer] = useState(false);
   const [status, setStatus] = useState('Pending');
-
   let params = useParams();
   let problemsdb = collection(database, 'Problems');
   const document = doc(problemsdb, params.problemId);
@@ -27,8 +28,9 @@ function Problemview() {
         unsubscribe = onSnapshot(document, (docs) => {
           setProblemValues(docs.data());
           if (docs.data()?.ProblemSetter[0].Email === localStorage.getItem('userEmail')) {
+            
+            // console.log("I am author");
             setIsCurrentUserAuthor(true);
-            // console.log('yes, he is the author');
           }
           if (docs.data()?.Reviewer.Email === localStorage.getItem('userEmail')) {
             setIsCurrentUserReviewer(true);
@@ -78,6 +80,7 @@ function Problemview() {
     return <h3 style={{textAlign: 'center'}}>Please <Link to='/login'>Login</Link> to access!</h3>
   }
   return (
+    <>
     <div className="container2">
       <div className="problem-name">
         <h2>
@@ -122,7 +125,7 @@ function Problemview() {
             color="error"
             onClick={() => handleStatusChange('Rejected')}
             style={{ marginRight: '1rem' }}
-          >
+            >
             <CloseIcon /> Rejected
           </Button>
           <Button variant="outlined" color="success" onClick={() => handleStatusChange('Accepted')}>
@@ -131,6 +134,8 @@ function Problemview() {
         </div>
       )}
     </div>
+      <Comment  />
+    </>
   );
 }
 

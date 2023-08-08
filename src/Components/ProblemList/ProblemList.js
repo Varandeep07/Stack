@@ -129,16 +129,16 @@ export default function ProblemList() {
           }
         {
           isRejectedClicked? (
-            <Button onClick={()=>setIsRejectedClicked(false)} style={{backgroundColor: '#E74646', fontSize: '13px'}}>Rejected</Button>
+            <Button onClick={()=>setIsRejectedClicked(false)} style={{backgroundColor: '#F15A59', fontSize: '13px'}}>Rejected</Button>
             ): 
             (<Button onClick={()=>setIsRejectedClicked(true)}>Rejected</Button>)
           }
         </div>
         {
           isSortByDateClicked? (
-            <Button onClick={sortByDate} style={{backgroundColor: 'rgba(225, 225, 225, 0.909)'}}>Sort By Date</Button>
+            <Button onClick={sortByDate} style={{backgroundColor: 'rgba(225, 225, 225, 0.909)'}}>Newest First</Button>
           ): 
-          (<Button onClick={sortByDate}>Sort By Date</Button>)
+          (<Button onClick={sortByDate}>Newest First</Button>)
         }
           </div>
       </div>

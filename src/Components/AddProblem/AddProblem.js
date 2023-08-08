@@ -105,6 +105,7 @@ const AddProblem = () => {
       alert("Please select a Reviewer!");
       return;
     }
+    let CommentsArr = [];
     const formData = {
       problemName,
       ProblemSetter,
@@ -117,7 +118,8 @@ const AddProblem = () => {
       Reviewer,
       StatusofProblem,
       problemId,
-      curDate
+      curDate,
+      CommentsArr
     };
     setDoc(newProblemRef, formData)
       .then(() => alert('Added Successfully!') )

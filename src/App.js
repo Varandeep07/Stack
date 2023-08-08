@@ -19,6 +19,8 @@ export default function App() {
   const [isUserLoggedIn, setIsUserLoggedIn] = useState(false);
   const [userEmail, setUserEmail] = useState('');
   const [isAllow, setIsAllow] = useState(false);
+
+  
   useEffect(()=>{
     if(userEmail){
       console.log("entered: ",userEmail);
