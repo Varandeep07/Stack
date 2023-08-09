@@ -70,7 +70,7 @@ const Comment = () => {
         <CommentBox Name={Name} Email={Email} Position={Position}/>
         { 
           CommentsArr?.map((comment,index)=>
-            <SingleComment key={index} Name={comment.Name} Content={comment.Content} Position={Position} 
+            <SingleComment key={index} Name={comment.Name} Content={comment.Content} Position={Position} Email={comment.Email}
             handleDeleteComment={()=>handleDeleteComment(index)}/>
           )
         }
