@@ -7,7 +7,7 @@ function CommentBox({ Name, Email, Position }) {
   const [Content, setContent] = useState('');
 
   const AddCommentClick = async () => {
-    if (Content?.length === 0) return;
+    if (Content?.length === 0 || Content.trimStart().length === 0) return;
 
     const problemsdb = collection(database, 'Problems');
     const url = window.location.pathname;
