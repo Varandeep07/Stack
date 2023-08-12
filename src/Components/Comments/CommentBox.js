@@ -21,7 +21,7 @@ function CommentBox({ Name, Email, Position }) {
      
       const docSnapshot = await getDoc(documentRef);
       const currentCommentsArr = docSnapshot.data()?.CommentsArr || [];
-      const updatedCommentsArr = [...currentCommentsArr, {Name, Email, Content}];
+      const updatedCommentsArr = [...currentCommentsArr, {Name, Email, Content, Position}];
      
       await updateDoc(documentRef, { CommentsArr: updatedCommentsArr });
 

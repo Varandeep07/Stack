@@ -6,6 +6,7 @@ import { Link, useNavigate } from "react-router-dom";
 import ProblemCard from '../ProblemCard/ProblemCard';
 import { AppContext } from '../../App';
 import { fetchUsers } from '../Utils/ReviewerList';
+import CircularProgress from '@mui/material/CircularProgress'
 
 export default function ProblemList() {
   const [data, setData] = useState([]);
@@ -18,7 +19,7 @@ export default function ProblemList() {
   const [isPendingClicked, setIsPendingClicked] = useState(false);
   const [isRejectedClicked, setIsRejectedClicked] = useState(false);
   const [firstTime, setFirstTime] = useState(true);
-
+  // console.log("is: ",isAllow);
   useEffect(() => {
     const fetchData = async () => {
       const result = await findAll();
@@ -26,7 +27,6 @@ export default function ProblemList() {
       setOriginalData(result);
     };
     fetchData();
-    setLoading(false);
   }, []);
   const fetchUserData = async () => {
     try {
@@ -44,6 +44,7 @@ export default function ProblemList() {
   };
   useEffect(()=>{
     fetchUserData();
+    setLoading(false);
   },[])
 
   const showFilteredProblems = () => {
@@ -58,7 +59,7 @@ export default function ProblemList() {
   };
 
   useEffect(() => {
-    console.log('in useEffect:');
+    // console.log('in useEffect:');
     if (!firstTime) {
       showFilteredProblems();
     } else {
@@ -67,11 +68,13 @@ export default function ProblemList() {
   }, [isAcceptedClicked, isPendingClicked, isRejectedClicked]);
 
   const navigate = useNavigate();
+  if(Loading){
+    return <div style={{ display: 'flex', justifyContent: 'center', marginTop: '2%', height: '100vh' }}>
+    <CircularProgress color="inherit" />
+  </div>
+  }
   if(!isAllow){
     return <h3 style={{ textAlign: 'center' }}>Ask admin for access</h3>
-  }
-  if(Loading){
-    return <h3 style={{textAlign: 'center'}}>Loading...</h3>
   }
   if(!isUserLoggedIn){
     return <h3 style={{textAlign: 'center'}}>Please <Link to='/login'>Login</Link> to access!</h3>
@@ -103,6 +106,7 @@ export default function ProblemList() {
   return (
     <>
       <div className='problem-list'>
+        
         <h2>Problem List</h2>
         <Button
           variant="contained"
