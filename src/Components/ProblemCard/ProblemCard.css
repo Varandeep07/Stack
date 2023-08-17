@@ -20,13 +20,17 @@
   align-items: center;
   justify-content: flex-start;
   margin-bottom: 6px;
+  flex-wrap: wrap;
+
 }
 
 .setter{
   display: flex;
   align-items: center;
   justify-content: space-between;
-  max-width: 612px;
+  max-width: 40vw;
+  /* min-width: 69.5px; */
+  flex-wrap: wrap;
   font-family: 'Open Sans';
   font-weight: 600;
   font-size: 0.9rem;
@@ -37,7 +41,8 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  max-width: 1000px;
+  max-width: 1000vw;
+  flex-wrap: wrap;
   margin: 0px 0px;
   position: relative;
 }
@@ -46,9 +51,10 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  max-width: 612px;
+  max-width: 612vw;
   min-width: 69.5%;
   font-family: 'Open Sans';
+  flex-wrap: wrap;
   font-weight: 600;
   font-size: 0.9rem;
   color: #757575;
