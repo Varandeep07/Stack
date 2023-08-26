@@ -3,7 +3,7 @@
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app). <br><br>
 Problem List - 
 <br> <br>
-![ProblemList](https://github.com/Varandeep07/Stack/assets/76240587/8d80f54f-d6a0-460f-bae2-6a2051442fb0)
+![WhatsApp Image 2023-08-26 at 3 28 23 PM](https://github.com/Varandeep07/Stack/assets/76240587/56cc706f-d3ef-44e6-835d-94012da9d921)
 <br><br>
 Add Problem - 
 <br><br>
