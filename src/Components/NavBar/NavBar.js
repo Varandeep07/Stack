@@ -46,7 +46,7 @@ export default function NavBar() {
     <div>
       <div className="navbar">
         <Link
-          to="/problemlist"
+          to={userEmail!==""?"/problemlist":"/login"}
           style={{
             color: '#2B2A4C',
             fontSize: '20px',
