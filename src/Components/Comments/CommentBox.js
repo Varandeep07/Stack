@@ -38,7 +38,7 @@ function CommentBox({ Name, Email, Position }) {
       }
       <input
         type='text'
-        style={{ marginLeft: '10px', marginRight: '10px', fontSize: '16px' }}
+        style={{ marginLeft: '10px', marginRight: '10px', fontSize: '16px', translate: '0px 3px' }}
         onChange={(e) => setContent(e.target.value)}
         value={Content}
         placeholder='type your comment...'
