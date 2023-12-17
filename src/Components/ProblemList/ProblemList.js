@@ -55,16 +55,7 @@ export default function ProblemList() {
     fetchUserData();
     setLoading(false);
   },[])
-  // experiment code
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      if(!isAllow){
-        return <h3 style={{ textAlign: 'center' }}>Ask admin for access</h3>
-      }
-    }, 1000);
-    return () => clearTimeout(timer);
-  }, []);
-  // ends here
+  
   const showFilteredProblems = () => {
     const filteredProblems = orginalData.filter((problem) => {
       return (
@@ -126,7 +117,13 @@ export default function ProblemList() {
     
   return (
     <>
-      <div className='problem-list'>
+      {!isAllow && (
+      <h3 style={{ textAlign: 'center' }}>Ask admin for access</h3>
+      )}
+
+      { isAllow && (
+        <>
+        <div className='problem-list'>
         
         <h2>Problem List</h2>
         <Button
@@ -134,7 +131,7 @@ export default function ProblemList() {
           color="primary"
           style={{ backgroundColor: '#136f63', color: 'white', margin: '10px', marginBottom: '20px' }}
           onClick={() => navigate("/add")}
-        >
+          >
           + Add
         </Button>
 
@@ -162,25 +159,28 @@ export default function ProblemList() {
         {
           isSortByDateClicked? (
             <Button onClick={sortByDate} style={{backgroundColor: 'rgba(225, 225, 225, 0.909)'}}>Newest First</Button>
-          ): 
+            ): 
           (<Button onClick={sortByDate}>Newest First</Button>)
         }
           </div>
       </div>
-      {data.length > 0 &&
+      {
+        data.length > 0 &&
         data.map((problem) =>
-          <ProblemCard
-            problemName={problem.problemName}
-            problemSetter={problem.problemSetter}
-            testers={problem.Reviewer}
-            difficulty={problem.difficulty}
-            date={problem.date}
-            problemId={problem.problemId}
-            status = {problem.status}
-            key = {problem.problemId}
-            canSeeReviewer = {canSeeReviewer}
-          />
+        <ProblemCard
+        problemName={problem.problemName}
+        problemSetter={problem.problemSetter}
+        testers={problem.Reviewer}
+        difficulty={problem.difficulty}
+        date={problem.date}
+        problemId={problem.problemId}
+        status = {problem.status}
+        key = {problem.problemId}
+        canSeeReviewer = {canSeeReviewer}
+        />
         )}
+        </>
+      )}
     </>
   );
 }

@@ -24,7 +24,7 @@ const findAll = async () => {
             "problemId": problem.data().problemId
         })
     });
-    console.log("Dd: ",DATA);
+    // console.log("Dd: ",DATA);
     return DATA;
 }
 
