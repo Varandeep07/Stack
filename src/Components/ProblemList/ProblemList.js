@@ -19,12 +19,21 @@ export default function ProblemList() {
   const [isPendingClicked, setIsPendingClicked] = useState(false);
   const [isRejectedClicked, setIsRejectedClicked] = useState(false);
   const [firstTime, setFirstTime] = useState(true);
+  const [AcceptedCount, setAcceptedCount] = useState(0);
+  const [PendingCount, setPendingCount] = useState(0);
+  const [RejectedCount, setRejectedCount] = useState(0);
+  
   // console.log("is: ",isAllow);
   useEffect(() => {
     const fetchData = async () => {
       const result = await findAll();
       setData(result);
       setOriginalData(result);
+      orginalData.map((problem)=>{
+        if(problem.status === 'Accepted') AcceptedCount++;
+        else if(problem.status === 'Pending') PendingCount++;
+        else RejectedCount++;
+      })
     };
     fetchData();
   }, []);
@@ -46,7 +55,16 @@ export default function ProblemList() {
     fetchUserData();
     setLoading(false);
   },[])
-
+  // experiment code
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      if(!isAllow){
+        return <h3 style={{ textAlign: 'center' }}>Ask admin for access</h3>
+      }
+    }, 1000);
+    return () => clearTimeout(timer);
+  }, []);
+  // ends here
   const showFilteredProblems = () => {
     const filteredProblems = orginalData.filter((problem) => {
       return (
@@ -55,14 +73,19 @@ export default function ProblemList() {
         (isRejectedClicked && problem.status === 'Rejected')
       );
     });
-    setData(filteredProblems);
+    if(filteredProblems.length>0)
+      setData(filteredProblems);
+    else{
+      setData(orginalData);
+    }
   };
 
   useEffect(() => {
     // console.log('in useEffect:');
     if (!firstTime) {
       showFilteredProblems();
-    } else {
+    } 
+    else{
       setFirstTime(false);
     }
   }, [isAcceptedClicked, isPendingClicked, isRejectedClicked]);
@@ -73,9 +96,7 @@ export default function ProblemList() {
     <CircularProgress color="inherit" />
   </div>
   }
-  if(!isAllow){
-    return <h3 style={{ textAlign: 'center' }}>Ask admin for access</h3>
-  }
+
   if(!isUserLoggedIn){
     return <h3 style={{textAlign: 'center'}}>Please <Link to='/login'>Login</Link> to access!</h3>
   }

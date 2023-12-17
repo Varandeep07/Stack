@@ -12,7 +12,7 @@ function Login() {
   const navigate = useNavigate();
 
   const handleSubmit = (e) => {
-    e.preventDefault();
+    e.preventDefault(); 
 
     signInWithEmailAndPassword(auth, email, password)
     .then((userCredential) => {
