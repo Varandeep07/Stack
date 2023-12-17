@@ -29,14 +29,26 @@ export default function ProblemList() {
       const result = await findAll();
       setData(result);
       setOriginalData(result);
-      orginalData.map((problem)=>{
-        if(problem.status === 'Accepted') AcceptedCount++;
-        else if(problem.status === 'Pending') PendingCount++;
-        else RejectedCount++;
-      })
     };
     fetchData();
   }, []);
+
+  useEffect(() => {
+    let acceptedCount = 0;
+    let pendingCount = 0;
+    let rejectedCount = 0;
+
+    orginalData.forEach((problem) => {
+      if (problem.status === 'Accepted') acceptedCount++;
+      else if (problem.status === 'Pending') pendingCount++;
+      else rejectedCount++;
+    });
+
+    setAcceptedCount(acceptedCount);
+    setPendingCount(pendingCount);
+    setRejectedCount(rejectedCount);
+  }, [orginalData]);
+
   const fetchUserData = async () => {
     try {
       const setters = await fetchUsers();
@@ -139,19 +151,19 @@ export default function ProblemList() {
           <div className="threeFilters">
         {
           isAcceptedClicked? (
-            <Button onClick={()=>setIsAcceptedClicked(false)} style={{backgroundColor: '#CBFFA9', fontSize: '13px'}}>Accepted</Button>
+            <Button onClick={()=>setIsAcceptedClicked(false)} style={{backgroundColor: '#CBFFA9', fontSize: '13px'}}>Accepted - {AcceptedCount}</Button>
             ): 
             (<Button onClick={()=>setIsAcceptedClicked(true)} >Accepted</Button>)
-          }
+        }
         {
           isPendingClicked? (
-            <Button onClick={()=>setIsPendingClicked(false)} style={{backgroundColor: '#F3AA60', fontSize: '13px'}}>Pending</Button>
+            <Button onClick={()=>setIsPendingClicked(false)} style={{backgroundColor: '#F3AA60', fontSize: '13px'}}>Pending - {PendingCount}</Button>
             ): 
             (<Button onClick={()=>setIsPendingClicked(true)}>Pending</Button>)
-          }
+        }
         {
           isRejectedClicked? (
-            <Button onClick={()=>setIsRejectedClicked(false)} style={{backgroundColor: '#F15A59', fontSize: '13px'}}>Rejected</Button>
+            <Button onClick={()=>setIsRejectedClicked(false)} style={{backgroundColor: '#F15A59', fontSize: '13px'}}>Rejected - {RejectedCount}</Button>
             ): 
             (<Button onClick={()=>setIsRejectedClicked(true)}>Rejected</Button>)
           }
